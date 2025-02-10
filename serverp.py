@@ -5,15 +5,16 @@ Raúl Vélez Ortíz
 Juan Alejandro Perez
 '''
 import socket
-import threading
+#import threading
 
 # Configuración de red
 host = '10.253.37.50'  # Dirección IPv4 del servidor
 ports = [12345, 12344, 12343, 12342, 12341]  # Puertos arbitrarios
-
+contador = 0
 
 
 def clientHandler(clientSocket, clientAddr):
+    global contador
     '''
     clientHandler
     
@@ -38,7 +39,9 @@ def clientHandler(clientSocket, clientAddr):
             print(f"Mensaje recibido del cliente: {data.decode('utf-8')}")
 
              # Enviar respuesta al cliente
-            response = input("Ingrese la respuesta para el cliente: ")
+            response = f'{contador}' # input("Ingrese la respuesta para el cliente: ")
+            #print(contador)
+            contador = contador + 1
             clientSocket.sendall(response.encode('utf-8'))
 
         except ConnectionResetError:
@@ -75,8 +78,9 @@ def listenPort(host, port):
     while True:
         # Esperar una conexión
         conn, addr = sock.accept()
-        handleClient = threading.Thread(target=clientHandler, args=(conn, addr))
-        handleClient.start()
+        clientHandler(conn, addr)
+        #handleClient = threading.Thread(target=clientHandler, args=(conn, addr))
+        #handleClient.start()
 
 def startServer(host, port):
     '''
@@ -95,10 +99,10 @@ def startServer(host, port):
     '''for port in ports:
         thread = threading.Thread(target=listenPort, args=(host, port))
         thread.start()
-        threads.append(thread)'''
+        threads.append(thread)
 
     # Wait for all threads to finish before shutting down
-    '''for thread in threads:
+    for thread in threads:
         thread.join()'''
 
 

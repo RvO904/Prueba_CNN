@@ -21,7 +21,7 @@ sock.connect((host, 12345))
 
 while True:
     # Enviar datos al servidor
-    message = input("Ingrese un mensaje para el servidor: ")
+    message = f'Eco cliente'#input("Ingrese un mensaje para el servidor: ")
     sock.sendall(message.encode('utf-8'))
 
     # Recibir respuesta del servidor
