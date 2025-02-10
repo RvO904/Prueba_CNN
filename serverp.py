@@ -38,7 +38,7 @@ def clientHandler(clientSocket, clientAddr):
             print(f"Mensaje recibido del cliente: {data.decode('utf-8')}")
 
              # Enviar respuesta al cliente
-            response = 'Eco'# input("Ingrese la respuesta para el cliente: ")
+            response = input("Ingrese la respuesta para el cliente: ")
             clientSocket.sendall(response.encode('utf-8'))
 
         except ConnectionResetError:
